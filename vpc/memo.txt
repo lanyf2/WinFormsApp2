@@ -1,0 +1,17 @@
+﻿
+    int BinarizeThreshold = Inputs.BinarizeThreshold;
+    if(BinarizeThreshold > 0 && BinarizeThreshold < 255)
+    {
+      Cognex.VisionPro.ImageProcessing.CogIPOneImagePixelMap ci = Tools.CogIPOneImageTool1.Operators[0] as CogIPOneImagePixelMap;
+      Cognex.VisionPro.ImageProcessing.CogIPOneImagePixelMap ci2 = Tools.CogIPOneImageTool2.Operators[0] as CogIPOneImagePixelMap;
+      byte[] map = ci.GetMap();
+      if(map[BinarizeThreshold - 1] != 0 || map[BinarizeThreshold] != 255)
+      {
+        for(int i = 0;i < BinarizeThreshold;i++)
+          map[i] = 0;
+        for(int i = BinarizeThreshold;i < map.Length;i++)
+          map[i] = 255;
+        ci.SetMap(map);      
+        ci2.SetMap(map);
+      }
+    }
